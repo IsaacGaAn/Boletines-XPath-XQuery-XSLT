@@ -1,0 +1,87 @@
+BOLETÍN XSLT - MUSEOS
+
+
+Ejercicio A:
+
+<?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+  <xsl:output method="xml" version="1.0" encoding="UTF-8" indent="yes"/>
+  <xsl:template match="/museos">
+    <museos>
+      <xsl:for-each select="museo">
+        <museo>
+          <nome><xsl:value-of select="@nome"/></nome>
+          <cidade><xsl:value-of select="@cidade"/></cidade>
+          <pais><xsl:value-of select="@pais"/></pais>
+        </museo>
+      </xsl:for-each>
+    </museos>
+  </xsl:template>
+</xsl:stylesheet>
+
+Ejercicio B:
+
+<?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+    <xsl:template match="/">
+        <museos>
+            <xsl:for-each select="museos/museo">
+                <museo ubicacion="{@cidade} ({@pais})">
+                    <xsl:value-of select="@nome"/>
+                </museo>
+            </xsl:for-each>
+        </museos>
+    </xsl:template>
+</xsl:stylesheet>
+
+Ejercicio C:
+
+<?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+  <xsl:template match="/">
+    <cidades>
+      <xsl:for-each select="museos/museo">
+        <cidade nome="{@cidade}">
+          <pais><xsl:value-of select="@pais"/></pais>
+          <museo><xsl:value-of select="@nome"/></museo>
+        </cidade>
+      </xsl:for-each>
+    </cidades>
+  </xsl:template>
+</xsl:stylesheet>
+
+Ejercicio D:
+
+<?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+    <xsl:template match="/museos">
+        <paises>
+            <xsl:for-each select="museo">
+                <xsl:variable name="pais" select="@pais"/>
+                <xsl:variable name="cidade" select="@cidade"/>
+                <pais nome="{$pais}">
+                    <cidade nome="{$cidade}">
+                        <museo nome="{@nome}"/>
+                    </cidade>
+                </pais>
+            </xsl:for-each>
+        </paises>
+    </xsl:template>
+</xsl:stylesheet>
+
+Ejercicio E:
+
+<?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+  <xsl:template match="/">
+    <lugares>
+      <xsl:for-each select="museos/museo">
+        <lugar tipo="museo">
+          <ubicacion nome="cidade"><xsl:value-of select="@cidade"/></ubicacion>
+          <ubicacion nome="pais"><xsl:value-of select="@pais"/></ubicacion>
+          <nome><xsl:value-of select="@nome"/></nome>
+        </lugar>
+      </xsl:for-each>
+    </lugares>
+  </xsl:template>
+</xsl:stylesheet>
